@@ -24,10 +24,12 @@ app.use('/img', express.static('img'));
 var login = require('./routes/login');
 var board = require('./routes/board');
 var init = require('./routes/init');
+var album = require('./routes/album');
 
 app.use('/api/login', login);
 app.use('/api/board', board);
 app.use('/api/init', init);
+app.use('/api/album', album);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

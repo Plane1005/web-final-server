@@ -12,11 +12,18 @@ var mysql = require("mysql");
 router.post("/getAvat", (req, res) => {
   let id = req.body.id;
   // console.log(id);
+  if (id === 'undefined' ){
+    res.status(289).json({ code: 289 });
+    return ;
+  }else{
   let status = false;
   let sql = `select avatar,name from users where id = '${id}'`;
   let conn = mysql.createConnection(dbCongif.config);
   let imgurl,name
   conn.query(sql, (err, data) => {
+    if (err){
+      console.log(err.errno);
+    }
     if (data[0].avatar) {
       status = true;
       imgurl = data[0].avatar
@@ -34,6 +41,7 @@ router.post("/getAvat", (req, res) => {
       res.status(299).json({ code: 299 });
     }
   }, 50);
+}
 });
 
 module.exports = router;

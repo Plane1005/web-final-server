@@ -13,15 +13,18 @@ var formidable = require("formidable");
 router.get("/dbtest", cate.getcate);
 
 router.post("/", (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   let status = false;
   let sql = `select password from users where id = '${req.body.username}'`;
   let conn = mysql.createConnection(dbCongif.config);
   conn.query(sql, (err, data) => {
+    if (err){
+      console.log(err.errno);
+    }
     if (data[0].password === req.body.password) {
       status = true;
     } else {
-      // console.log(data[0].password);
+      console.log(data[0].password);
     }
   });
   conn.end();
@@ -36,7 +39,7 @@ router.post("/", (req, res) => {
 });
 
 router.post("/regi", (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   let status = -1;
   let sql = `insert into users (id,password,name,sex,email) values ('${req.body.phone}','${req.body.password}','${req.body.nickname}','${req.body.gender}','${req.body.email}')`;
   let conn = mysql.createConnection(dbCongif.config);
@@ -65,8 +68,8 @@ router.post("/upload", (req, res) => {
     let imgname = Object.keys(files)[0].toString();
     //console.log(files[imgname].path);
     let imgpath = files[imgname].path.split('\\').join('//')
-    // console.log(imgpath);
-    // console.log(imgname);
+    console.log(imgpath);
+    console.log(imgname);
     // console.log(Object.keys(files)[0])
     let status = -1;
     let sql = `update users set avatar ='${imgpath}' where id ='${imgname}'`;
